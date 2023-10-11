@@ -7,7 +7,7 @@ import COLORS from './src/consts/colors';
 import FoodDetails from './src/screens/FoodDetails';
 import BookingScreen from './src/screens/FoodBooking.js';
 import FoodHome from './src/screens/FoodHome.js'
-import FoodCard from './src/components/FoodCard';
+
 const Stack = createStackNavigator();
 const App = () => {
   return (
