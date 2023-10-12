@@ -14,8 +14,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../consts/colors';
-import FoodCard from '../components/FoodCard';
-import TopFoodCard from '../components/TopFoodCard';
 import searchFood from '../consts/searchFood';
 import HomeCompo from '../components/FoodHomeCompo';
 import HotelHomeCompo from '../components/HotelHomeCompo';
@@ -25,7 +23,7 @@ import DestinationHomeCompo from '../components/DestinationHomeCompo';
 const { width } = Dimensions.get('screen');
 const cardWidth = width / 1.8;
 
-const Home = ({ navigation }) => {
+const WelcomeScreen = ({ navigation }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
@@ -60,13 +58,10 @@ const Home = ({ navigation }) => {
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <View style={style.header}>
                 <View style={{ paddingBottom: 15 }}>
-                    <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Hungry Time</Text>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Teast Your </Text>
-                        <Text style={{ fontSize: 30, fontWeight: 'bold', color: COLORS.primary }}>Food</Text>
-                    </View>
+                    <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Xplorify</Text>
+
                 </View>
-                <Icon name='person-outline' size={38} color={COLORS.grey} />
+                {/* <Icon name='person-outline' size={38} color={COLORS.grey} /> */}
             </View>
             <View style={style.searchInputContainer}>
                 <Icon name='search' size={25} style={{ marginLeft: 20 }} />
@@ -86,11 +81,9 @@ const Home = ({ navigation }) => {
                 />
             ) : (
                 <ScrollView showsHorizontalScrollIndicator={false}>
-                    <FoodCard navigation={navigation} />
-                    <TopFoodCard navigation={navigation} />
+                    <DestinationHomeCompo navigation={navigation} />
+                    <HotelHomeCompo navigation={navigation} />
                     <HomeCompo navigation={navigation} />
-                    <HotelHomeCompo navigation={navigation}/>
-                    <DestinationHomeCompo navigation={navigation}/>
                 </ScrollView>
             )
             }
@@ -103,7 +96,7 @@ const style = StyleSheet.create({
     header: {
         marginTop: 20,
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         paddingHorizontal: 20,
     },
     searchInputContainer: {
@@ -116,7 +109,7 @@ const style = StyleSheet.create({
         borderBottomLeftRadius: 30,
         flexDirection: 'row',
         alignItems: 'center',
-        borderColor: COLORS.primary,
+        marginVertical: 50,
         borderWidth: 1,
 
     },
@@ -175,4 +168,4 @@ const style = StyleSheet.create({
         paddingBottom: 20,
     },
 })
-export default Home;
+export default WelcomeScreen;

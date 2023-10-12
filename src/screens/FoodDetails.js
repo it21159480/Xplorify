@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import COLORS from '../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import TopFoodCard from '../components/TopFoodCard';
 
 const Detail = ({ navigation, route }) => {
   const item = route.params;
@@ -92,7 +93,8 @@ const Detail = ({ navigation, route }) => {
         <TouchableOpacity onPress={handleBookNow} style={style.btn}>
           <Text style={{ color: COLORS.white, fontSize: 18, fontWeight: 'bold' }}>Pre - Order</Text>
         </TouchableOpacity>
-      </View>
+      </View>         
+      <TopFoodCard navigation={navigation}/>
     </ScrollView>
   );
 };
@@ -106,6 +108,7 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.primary,
     marginHorizontal: 20,
     borderRadius: 10,
+    marginBottom:20,
   },
 
   priceTag: {

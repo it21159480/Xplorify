@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Image, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 import { shareAsync } from 'expo-sharing';
 import * as Print from 'expo-print';
@@ -9,11 +9,50 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 const Booking = ({ navigation, route }) => {
 
-  const [idNumber, setIdNumber] = useState(1);
-  const [total, setTotal] = useState();
+  const [contact, setContact] = useState();
+  const [note, setNote] = useState();
+  const [total, setTotal] = useState(1);
   const food = route.params.food;
   const [isModalVisible, setModalVisible] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [contactError, setContactError] = useState();
+  const [noteError, setNoteError] = useState();
+
+  // validation for phone number
+  const validateContact = () => {
+    if (!contact) {
+      setContactError('Contact number is required');
+    } else if (!/^\d{10}$/.test(contact)) {
+      setContactError('Invalid contact number');
+    } else {
+      setContactError('');
+    }
+  };
+
+  // validation for order note
+  const validateNote = () => {
+    if (!note) {
+      setNoteError('Note is required');
+    } else if (note.length > 250) {
+      setNoteError('Note should be 250 characters or less');
+    } else {
+      setNoteError('');
+    }
+  };
+
+  const handleOrderNow = () => {
+    validateContact();
+    validateNote();
+    console.log('contactError:', {contactError});
+    console.log('noteError:', {noteError});
+    // if (!contactError && !noteError) {
+    //   setModalVisible(true); // Only set isModalVisible to true when there are no validation errors
+    // }
+    if (contactError === '' && noteError === '') {
+      setModalVisible(true);
+    }
+  };
+
 
   const print = async () => {
     // On iOS/android prints the given html. On web prints the HTML from the current page.
@@ -52,9 +91,9 @@ const Booking = ({ navigation, route }) => {
   </head>
   <body style="text-align: center;">
     <h1 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
-    Food Order Details <span style="color:red;">ID : 012231</span>
+    Xplorify : Food Pre Order Details</br> 
     </h1>
-    
+    <img  src="${food.image}" alt="A beautiful landscape" width="400" height="300" />
 
     <table>
       <tr>
@@ -62,15 +101,19 @@ const Booking = ({ navigation, route }) => {
         <th>Quantity</th>
         <th>Per Price</th>
         <th>Total Price</th>
+        <th>Contact Number</th>
+        <th>Special Note</th>
       </tr>
       <tr>
         <td>${food.name}</td>
-        <td>${idNumber}</td>
+        <td>${quantity}</td>
         <td>${food.price}</td>
         <td>${total}</td>
+        <td>${contact}</td>
+        <td>${note}</td>
       </tr>
       
-      <!-- Add more rows here for additional items -->
+      <!-- Add more rows here for additional items <span style="color:red;">ID : 012231</span> -->
     </table>
    
    
@@ -82,7 +125,7 @@ const Booking = ({ navigation, route }) => {
 
   const handleClose = () => {
     navigation.navigate('FoodHome');
-    setModalVisible(!isModalVisible);
+    setModalVisible(false);
   };
   const increase = () => {
     const newQuantity = quantity + 1;
@@ -95,7 +138,7 @@ const Booking = ({ navigation, route }) => {
       setQuantity(newQuantity);
     }
   };
- 
+
 
   useEffect(() => {
     if (food.price && quantity) {
@@ -109,42 +152,65 @@ const Booking = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Order Details</Text>
-      {/* <Image source={food.image} style={styles.topFoodCardImage}/> */}
-      <Text style={styles.foodDetails}>Food Name: {food.name}</Text>
-      <Text style={styles.foodDetails}>Price: {total}</Text>
-      <TextInput
-        style={[styles.input,]}
-        placeholder=" Enter Quantity"
-        value={idNumber}
-        onChangeText={(value) => setIdNumber(value)}
-        keyboardType={'numeric'}
-      />
-      <View style={{flexDirection:'row', justifyContent:'space-between'}} >
-        <Text style={{fontSize:25, fontWeight:'bold'}}>Quantity</Text>
-        <View style={styles.quantity} >
-          <Icon name="pluscircle" size={40} color="black" onPress={increase} />
-          <Text style={{paddingLeft:10, paddingRight:15, fontSize:25}} >{quantity}</Text>
-          <Icon name="minuscircle" size={40} color="black"  onPress={decrease}/>
+      <ScrollView>
+        <View style={{ marginVertical: 20 }} >
+          <Image source={food.image} style={styles.topFoodCardImage} />
         </View>
+        <Text style={styles.foodDetails}>Food Name: {food.name}</Text>
+        <Text style={styles.foodDetails}>Price: {total}</Text>
+        {/* <TextInput
+          style={[styles.input,]}
+          placeholder= {total.toString()}
+          editable={false}
+        /> */}
+        <TextInput
+          style={[styles.input,{textAlignVertical: 'center'}]}
+          placeholder=" Enter Contact Number"
+          value={contact}
+          onChangeText={(value) => setContact(value)}
+          keyboardType={'phone-pad'}
+          onBlur={validateContact}
+        />
+        {contactError ? <Text style={styles.errorText}>{contactError}</Text> : null}
+        <TextInput
+          style={[styles.input,{textAlignVertical: 'top', paddingTop:5}]}
+          placeholder=" Add an order note"
+          value={note}
+          autoCapitalize="sentences"
+          autoCorrect={false}
+          multiline={true}
+          numberOfLines={4}
+          maxLength={250}
+          onChangeText={(value) => setNote(value)}
+          keyboardType={'default'} 
+        />
+        {noteError ? <Text style={styles.errorText}>{noteError}</Text> : null}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 20 }} >
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Quantity</Text>
+          <View style={styles.quantity} >
+            <Icon name="pluscircle" size={30} color="black" onPress={increase} style={{ paddingRight: 20 }} />
+            <Text style={{ paddingLeft: 10, paddingRight: 10, fontSize: 20 }} >{quantity}</Text>
+            <Icon name="minuscircle" size={30} color="black" onPress={decrease} style={{ paddingLeft: 20 }} />
+          </View>
+        </View>
+        <Button title="Order Now" onPress={()=>handleOrderNow()} />
+      </ScrollView>
 
-      </View>
-
-
-      <Button title="Order Now" onPress={() => setModalVisible(!isModalVisible)} />
-
+      
       <Modal isVisible={isModalVisible}>
         <View style={styles.modalContainer}>
           <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 10 }}>
             <Icon name="checkcircle" color='green' size={28} />
             <Text style={{ fontSize: 15, fontWeight: 'bold', textAlign: 'center', paddingLeft: 10, paddingTop: 5 }}>Successfull</Text>
           </View>
-          <Text style={styles.modalText}>Total Amount:{total}</Text>
+          {/* <Text style={styles.modalText}>Total Amount:{total}</Text>
           <Text style={styles.modalText}>Food Name: {food.name}</Text>
-          <Text style={styles.modalText}>Quantity: {idNumber}</Text>
+          <Text style={styles.modalText}>Quantity: {quantity}</Text> */}
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 5 }}>
             <Button title='close' onPress={handleClose} color={'red'} />
             <Button title='print' onPress={print} color={'black'} />
-            <Button title='share' onPress={printToFile} /></View>
+            <Button title='share' onPress={printToFile} />
+          </View>
 
         </View>
       </Modal>
@@ -171,9 +237,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 10,
     marginBottom: 10,
+    borderRadius:10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     paddingBottom: 5,
+    paddingLeft:8,
+    backgroundColor:'#f5f5f5',
   },
   errorText: {
     color: 'red',
@@ -200,10 +269,13 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 10,
   },
-  quantity:{
-    flexDirection:'row',
-    justifyContent:'space-between',
-    paddingHorizontal:15,
+  quantity: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    // marginBottom:40,
+    // marginTop:10,
+    alignItems: 'center',
+
   },
 });
 
