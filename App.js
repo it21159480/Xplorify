@@ -9,7 +9,8 @@ import BookingScreen from './src/screens/FoodBooking.js';
 import FoodHome from './src/screens/FoodHome.js'
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import OrederedPage from './src/screens/OrderedPage';
-import UpdateOrder from './src/screens/UpdateOrder'
+import UpdateOrder from './src/screens/UpdateOrder';
+import UserMap from './src/screens/UserMap';
 const Stack = createStackNavigator();
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Stack.Screen name="BookingScreen" component={BookingScreen} />
         <Stack.Screen name='OrderedPage'component={OrederedPage} />
         <Stack.Screen name='UpdateOrder' component={UpdateOrder}/>
+        <Stack.Screen name='UserMap' component={UserMap}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
