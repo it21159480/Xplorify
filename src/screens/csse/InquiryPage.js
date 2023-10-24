@@ -44,7 +44,7 @@ const InquiryPage = () => {
     };
     const handleSend = () => {
         if (validateInput()) {
-            alert("Success", "Inquiry sent successfully!");
+            alert("Inquiry sent successfully!\nWe will raech you soon");
             setFormData({
                 companyName: '',
                 personContact: '',
@@ -63,7 +63,7 @@ const InquiryPage = () => {
                     message: '',
                 });
                 console.log("Form is valid!");
-                alert("Success", "Inquiry sent successfully!");
+                alert("Success Inquiry sent successfully!");
             })
             .catch((error) => {
                 console.error("There was an error sending the inquiry:", error);
