@@ -44,6 +44,14 @@ const InquiryPage = () => {
     };
     const handleSend = () => {
         if (validateInput()) {
+            alert("Success", "Inquiry sent successfully!");
+            setFormData({
+                companyName: '',
+                personContact: '',
+                contactNumber: '',
+                subject: '',
+                message: '',
+            });
             axios.post('http://192.168.254.78:8080/api/inquiry', formData)
             .then((response) => {
                 alert("Success", "Inquiry sent successfully!");
