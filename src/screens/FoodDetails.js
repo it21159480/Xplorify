@@ -43,7 +43,7 @@ const Detail = ({ navigation, route }) => {
       </ImageBackground>
       <View>
         <View style={style.iconContainer}>
-          <Icon name="place" color={COLORS.white} size={28} onPress={()=>navigation.navigate('UserMap',{ location: item.location })}/>
+          <Icon name="place" color={COLORS.white} size={28} onPress={() => navigation.navigate('UserMap', { location: item.location })} />
         </View>
         <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
           <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{item.name}</Text>
@@ -93,8 +93,8 @@ const Detail = ({ navigation, route }) => {
         <TouchableOpacity onPress={handleBookNow} style={style.btn}>
           <Text style={{ color: COLORS.white, fontSize: 18, fontWeight: 'bold' }}>Pre - Order</Text>
         </TouchableOpacity>
-      </View>         
-      <TopFoodCard navigation={navigation}/>
+      </View>
+      <TopFoodCard navigation={navigation} />
     </ScrollView>
   );
 };
@@ -108,7 +108,7 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.primary,
     marginHorizontal: 20,
     borderRadius: 10,
-    marginBottom:20,
+    marginBottom: 20,
   },
 
   priceTag: {
