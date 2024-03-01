@@ -14,9 +14,10 @@ Xplorify is a mobile application designed to provide tourists with a safe and ex
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/xplorify-app.git`
-2. Navigate to the project directory: `cd xplorify-app`
-3. Install dependencies: `npm install`
+1. Clone the repository: `https://github.com/it21159480/Xplorify.git`
+2. Navigate to the project directory: `cd <Directory Name>`
+3. Install Expo CLI globally (if not already installed): `npm install -g expo-cli`
+4. Start the Expo development server:`expo start`
 
 ## Usage
 
@@ -24,6 +25,4 @@ Xplorify is a mobile application designed to provide tourists with a safe and ex
 2. Explore various features and services tailored for a memorable travel experience.
 3. To pre-order food, navigate to the designated section and follow the provided prompts.
 
-```bash
-# Example commands or code snippets
-npm start
+
