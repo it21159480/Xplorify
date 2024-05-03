@@ -12,10 +12,7 @@ import {
     Image,
     Animated,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../consts/colors';
-import foods from '../consts/foods';
-import LessSpicy from '../consts/LessSpicy';
 import searchFoods from '../consts/searchFood';
 
 const { width } = Dimensions.get('screen');

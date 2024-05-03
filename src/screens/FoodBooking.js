@@ -18,7 +18,7 @@ const Booking = ({ navigation, route }) => {
   const [contactError, setContactError] = useState();
   const [noteError, setNoteError] = useState();
 
- 
+
 
   const sendData = async () => {
     const newOrder = {
@@ -155,7 +155,7 @@ const Booking = ({ navigation, route }) => {
           </View>
         </View>
         {/* <Button title="Order Now" onPress={() => handleOrderNow()} /> */}
-        <TouchableOpacity onPress={() => {handleOrderNow();}} style={styles.btn}>
+        <TouchableOpacity onPress={() => { handleOrderNow(); }} style={styles.btn}>
           <Text style={{ color: COLORS.white, fontSize: 18, fontWeight: 'bold' }}>Order Now</Text>
         </TouchableOpacity>
       </ScrollView>
